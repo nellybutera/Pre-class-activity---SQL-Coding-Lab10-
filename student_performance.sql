@@ -1,6 +1,5 @@
 -- ============================================
 -- ALU Rwanda Student Grades DB
--- Just tracking Linux & Python grades for fun
 -- ============================================
 
 -- Drop DB if it exists, so we can start fresh
@@ -34,8 +33,8 @@ CREATE TABLE python_grades (
 );
 
 -- ============================================
--- 2. Put in some sample students
--- I picked 15, split into 2 years
+-- 2. Put in some sample students.
+-- I picked 15, split into 2 years (incase we have students from different intakes)
 -- ============================================
 INSERT INTO students (student_name, intake_year) VALUES
 ('Ange Uwimana', 2024),
@@ -55,8 +54,7 @@ INSERT INTO students (student_name, intake_year) VALUES
 ('Eliane Mukandoli', 2025);
 
 -- ============================================
--- 3. Add Linux grades
--- Some students did poorly, some did really well
+-- 3. Add Linux grades. A mix of students where some did poorly and some did really well.
 -- ============================================
 INSERT INTO linux_grades (student_id, grade_obtained) VALUES
 (1, 78), (2, 45), (3, 66), (4, 30), (5, 82),
@@ -64,8 +62,7 @@ INSERT INTO linux_grades (student_id, grade_obtained) VALUES
 (11, 40), (12, 85);
 
 -- ============================================
--- 4. Add Python grades
--- Again, mix of pass and fail
+-- 4. Add Python grades, mix of pass and fail
 -- ============================================
 INSERT INTO python_grades (student_id, grade_obtained) VALUES
 (3, 88), (4, 72), (5, 91), (6, 60), (7, 77),
@@ -73,7 +70,7 @@ INSERT INTO python_grades (student_id, grade_obtained) VALUES
 (15, 78);
 
 -- ============================================
--- 5. Query: who failed Linux? (less than 50)
+-- 5. Who failed Linux? (less than 50)
 -- ============================================
 SELECT s.student_name, l.grade_obtained
 FROM students s
@@ -81,8 +78,7 @@ JOIN linux_grades l ON s.student_id = l.student_id
 WHERE l.grade_obtained < 50;
 
 -- ============================================
--- 6. Query: students who only did one course
--- either Linux or Python, not both
+-- 6. Students who only did one course, either Linux or Python but not both.
 -- ============================================
 SELECT s.student_name
 FROM students s
@@ -99,7 +95,7 @@ WHERE s.student_id IN (
 );
 
 -- ============================================
--- 7. Query: students who did both courses
+-- 7. Students who did both courses
 -- ============================================
 SELECT s.student_name
 FROM students s
@@ -109,8 +105,7 @@ WHERE s.student_id IN (
 );
 
 -- ============================================
--- 8. Query: average grade per course
--- just want to see how everyone did
+-- 8. Average grade per course, how everyone did.
 -- ============================================
 SELECT 'Linux' AS course, AVG(grade_obtained) AS avg_grade
 FROM linux_grades
@@ -119,8 +114,7 @@ SELECT 'Python' AS course, AVG(grade_obtained) AS avg_grade
 FROM python_grades;
 
 -- ============================================
--- 9. Query: top student overall
--- average across both courses
+-- 9. Top student overall, average across both courses
 -- ============================================
 SELECT s.student_name, AVG(g.grade_obtained) AS avg_score
 FROM students s
